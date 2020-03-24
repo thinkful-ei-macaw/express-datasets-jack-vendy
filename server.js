@@ -10,12 +10,20 @@ app.use(morgan('dev'));
 
 app.get('/movie', (req,res)=>{
   let moviesList = [...movies];
-  let genre = req.query.genre.toLowerCase();
+  let { genre, country}   = req.query;
+  
 
   if(genre){
+    genre=genre.toLowerCase();
     moviesList = moviesList.filter(movie =>{
       console.log(movie.genre.toLowerCase(), genre);
       return movie.genre.toLowerCase().includes(genre);
+    });
+  }
+  if(country){
+    country=country.toLowerCase();
+    moviesList = moviesList.filter(movie =>{
+      return movie.country.toLowerCase().includes(country);
     });
   }
   res.json(moviesList);
